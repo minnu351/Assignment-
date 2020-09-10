@@ -1,4 +1,4 @@
-#include "thread_107.h"
+#include<pthread.h>
 #include <stdio.h>
 #define NUM_TICKETS 35
 #define NUM_SELLERS 4
