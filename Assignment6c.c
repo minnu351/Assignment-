@@ -1,35 +1,27 @@
 #include<stdio.h>
-#include<sys/types.h>
+#include<unistd.h>
 #include<stdlib.h>
-int turn;
-int flag[2];
-int main(void)
-{
-        
-        int pid =fork();
-        int t =10;
-        while(t--)
-        {
-                if(pid==0)
-                {
-                     
-                     flag[0]=1;
-                     turn=1;
-                     while(flag[1]==1&&turn==1);
-                     printf("This is critical section:child process\n");
-                     flag[0]=0;
-                }
-                else
-                {
-                    
-                       
-                        flag[1]=1;
-                        turn=0;
-                        while(flag[0]&&turn==0);
-                        printf("This is critical section:parent process  \n");
-                        flag[1]=0;
-                }
-        }
-        return 0;
+/*
+The output in this case is intermixed because of the switch in control of execution b/w child and the parent process.
+This is unavoidable. 
+The possible solutions be either to make the parent sleep this the child completes execution or use vfork() system call.
+*/
 
+int main()
+{
+    int j=1;
+    int pid=fork();
+    if(pid==0)
+    {
+        for(;j<=10;j++)
+         printf("Child Process\tChild_cnt= %d\n", j);
+         exit(0);
+    }
+    else 
+    {
+        for(;j<=10;j++)
+         printf("Parent process \tParent_cnt = %d\n", j);
+
+    }
+   return 0;
 }
